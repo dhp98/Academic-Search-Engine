@@ -1,0 +1,290 @@
+{
+    "index_patterns": [
+        "openalex_works"
+    ],
+    "settings": {
+        "index": {
+            "refresh_interval": "1h",
+            "analysis": {
+                "normalizer": {
+                    "lower": {
+                        "filter": "lowercase"
+                    }
+                }
+            },
+            "number_of_shards": "10",
+            "number_of_replicas":0,
+            "auto_expand_replicas": false
+
+        }
+    },
+    "mappings": {
+        "properties": {
+            "is_retracted": {
+                "type": "boolean"
+            },
+            "cited_by_api_url": {
+                "index": false,
+                "type": "keyword"
+            },
+            "is_paratext": {
+                "type": "boolean"
+            },
+            "biblio": {
+                "index": false,
+                "type": "flattened"
+            },
+            "related_works": {
+                "index": false,
+                "type": "keyword"
+            },
+            "title": {
+                "index": false,
+                "type": "keyword"
+            },
+            "type": {
+                "type": "keyword"
+            },
+            "publication_date": {
+                "type": "date"
+            },
+            "authorships": {
+                "properties": {
+                    "institutions": {
+                        "properties": {
+                            "country_code": {
+                                "type": "keyword"
+                            },
+                            "ror": {
+                                "type": "keyword"
+                            },
+                            "id": {
+                                "type": "keyword"
+                            },
+                            "display_name": {
+                                "type": "keyword"
+                            },
+                            "type": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "author": {
+                        "properties": {
+                            "orcid": {
+                                "type": "keyword"
+                            },
+                            "id": {
+                                "eager_global_ordinals": true,
+                                "type": "keyword"
+                            },
+                            "display_name": {
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "author_position": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "open_access": {
+                "properties": {
+                    "oa_status": {
+                        "type": "keyword"
+                    },
+                    "is_oa": {
+                        "type": "boolean"
+                    },
+                    "oa_url": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "id": {
+                "index": false,
+                "type": "keyword"
+            },
+            "abstract_inverted_index": {
+                "index": false,
+                "type": "flattened"
+            },
+            "abstract":{
+                "type": "text",
+                "analyzer": "standard",
+                "fields": {
+                    "complete": {
+                        "max_input_length": 15,
+                        "analyzer": "simple",
+                        "preserve_position_increments": true,
+                        "type": "completion",
+                        "preserve_separators": true
+                    }
+                }
+            },
+            "host_venue": {
+                "dynamic": "true",
+                "properties": {
+                    "license": {
+                        "type": "keyword"
+                    },
+                    "issn": {
+                        "eager_global_ordinals": true,
+                        "type": "keyword"
+                    },
+                    "issn_l": {
+                        "type": "keyword"
+                    },
+                    "publisher": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "normalizer": "lower",
+                                "type": "keyword"
+                            }
+                        }
+                    },
+                    "is_oa": {
+                        "type": "boolean"
+                    },
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "display_name": {
+                        "type": "keyword"
+                    },
+                    "type": {
+                        "type": "keyword"
+                    },
+                    "version": {
+                        "type": "keyword"
+                    },
+                    "url": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "mesh": {
+                "index": false,
+                "type": "flattened"
+            },
+            "references_count": {
+                "type": "integer"
+            },
+            "cited_by_count": {
+                "type": "integer"
+            },
+            "referenced_works": {
+                "type": "keyword"
+            },
+            "display_name": {
+                "type": "text",
+                "fields": {
+                    "complete": {
+                        "max_input_length": 50,
+                        "analyzer": "simple",
+                        "preserve_position_increments": true,
+                        "type": "completion",
+                        "preserve_separators": true
+                    },
+                    "keyword": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "url": {
+                "index": false,
+                "type": "keyword"
+            },
+            "alternate_host_venues": {
+                "properties": {
+                    "license": {
+                        "type": "keyword"
+                    },
+                    "is_oa": {
+                        "type": "boolean"
+                    },
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "display_name": {
+                        "type": "keyword"
+                    },
+                    "type": {
+                        "type": "keyword"
+                    },
+                    "version": {
+                        "type": "keyword"
+                    },
+                    "url": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "publication_year": {
+                "type": "integer"
+            },
+            "concepts": {
+                "properties": {
+                    "score": {
+                        "coerce": true,
+                        "index": false,
+                        "ignore_malformed": false,
+                        "type": "float"
+                    },
+                    "level": {
+                        "type": "integer"
+                    },
+                    "id": {
+                        "type": "keyword"
+                    },
+                    "display_name": {
+                        "index": false,
+                        "type": "keyword"
+                    },
+                    "wikidata": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "ids": {
+                "dynamic": "true",
+                "type": "object",
+                "enabled": false
+            },
+            "updated_date": {
+                "index": false,
+                "type": "date"
+            },
+            "alternate_locations": {
+                "properties": {
+                    "license": {
+                        "type": "keyword"
+                    },
+                    "is_oa": {
+                        "index": false,
+                        "type": "boolean"
+                    },
+                    "is_best": {
+                        "index": false,
+                        "type": "keyword"
+                    },
+                    "version": {
+                        "type": "keyword"
+                    },
+                    "url": {
+                        "type": "keyword"
+                    },
+                    "venue_id": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            "doi": {
+                "index": false,
+                "type": "keyword"
+            }
+        }
+    },
+    "aliases": {}
+}
